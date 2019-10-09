@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>第二题</title>
+		<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				font-size: 14px;
+			}
+			#demo2>div {
+				width: 450px;
+				margin: 50px auto;
+			}
+
+			#demo2>div>ul {
+				border: 1px solid black;
+			}
+
+			#demo2>div>ul:nth-of-type(1) li {
+				width: 100px;
+				display: inline-block;
+				text-align: center;
+				padding: 4px;
+			}
+			#demo2>div>ul:nth-of-type(n+2){
+				height: 200px;
+				border: 3px solid blanchedalmond;
+			}
+			#demo2>div>ul:nth-of-type(n+2) li {
+				width: 40%;
+				display: inline-block;
+				text-align: center;
+				line-height: 2em;
+			}
+			.holder {
+				background: gold;
+				font-weight: bold;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="demo2">
+			<tab :list="list1" :holder="holderCls"></tab>
+			<tab :list="list2" :holder="holderCls"></tab>
+		</div>
+		<script type="text/javascript">
+			Vue.component('tab', {
+				props: ['list', 'holder'],
+				template: `
+					<div>
+						<ul>
+							<li v-for="(item,index) in list" :class="item.show?holder:''" :key="index" @click="handleShow(index)">
+								{{item.title}}
+							</li>
+						</ul>
+						<ul v-show="item.show" v-for="(item,index) in list">
+							<li v-for="(value,key) in item.content">
+								{{value}}
+							</li>
+						</ul>
+					</div>
+				`,
+				methods: {
+					handleShow(index) {
+						for (var i = 0; i < this.list.length; i++) {
+							this.list[i].show = false
+						}
+						this.list[index].show = true
+					}
+				}
+			})
+			new Vue({
+				el: '#demo2',
+				data() {
+					return {
+						list1: [{
+								title: "选项卡1",
+								content: {one:'这是选项卡1的内容'},
+								show: true
+							},
+							{
+								title: "选项卡2",
+								content: {one:'这是选项卡2的内容'},
+								show: false
+							},
+							{
+								title: "选项卡3",
+								content: {one:'这是选项卡3的内容'},
+								show: false
+							}
+						],
+						list2: [{
+								title: "京东超市",
+								content: {
+									one: '时令生鲜',
+									two: '休闲零食',
+									three:'营养保健'
+								},
+								show: true
+							},
+							{
+								title: "数码电器",
+								content: {
+									one: '数码电器',
+									two: '数码电器',
+									three:'数码电器'
+								},
+								show: false
+							},
+							{
+								title: "服饰美妆",
+								content: {
+									one: '服饰美妆',
+									two: '服饰美妆',
+									three:'服饰美妆'
+								},
+								show: false
+							},
+							{
+								title: "京东生鲜",
+								content: {
+									one: '京东生鲜',
+									two: '京东生鲜',
+									three:'京东生鲜'
+								},
+								show: false
+							}
+						],
+						holderCls: 'holder'
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

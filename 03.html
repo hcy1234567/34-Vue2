@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>第三题</title>
+		<script src="vue.js" ></script>
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+
+			.myover {
+				border: 1px solid gold;
+				color: white;
+				background: gold;
+				width: 100px;
+				height: 35px;
+			}
+
+			.myout {
+				background: white;
+				border: 1px solid gold;
+				width: 100px;
+				height: 35px;
+
+			}
+			#demo3{
+				width: 300px;
+				height: 50px;
+				margin: 100px 100px;
+			}
+			.input1{
+				width: 150px;
+				height: 20px;
+				border: 1px solid gold;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="demo3">
+			<input type="text" v-model="message" class="input1"/>
+			<my-button :message="message" :is-over="isOver"></my-button>
+		</div>
+		<script>
+			Vue.component('my-button', {
+				props: ['message', 'is-over'],
+				template: '<button :class="over?overCls:outCls" @mouseenter="changeOver()" @mouseleave="changeOut()" @click="handleAlert">{{message}}</button>',
+				methods: {
+					handleAlert() {
+						alert(this.message)
+					},
+					changeOver() {
+						this.over = true
+					},
+					changeOut() {
+						this.over = false
+					}
+				},
+				data() {
+					return {
+						over: this.isOver,
+						overCls: 'myover',
+						outCls: 'myout'
+					}
+				}
+			})
+			new Vue({
+				el: '#demo3',
+				data() {
+					return {
+						message: '单击按钮',
+						isOver: false
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

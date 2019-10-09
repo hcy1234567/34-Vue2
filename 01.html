@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>第一题</title>
+		<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+				font-size: 14px;
+			}
+       .button{width: 28px;
+		   height: 28px;
+         background: darkcyan;
+		   border: 1px solid darkcyan;
+		}
+			.input{
+				height: 24px;
+				width: 49px;
+				text-align:center;
+			}
+		#demo1{
+             width: 130px;
+			 height: 50px;
+			margin-left: 600px;
+			margin-top: 50px;
+			}
+			.div1{
+				width: 109px;
+				margin: 0px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="demo1">
+			<my-button></my-button>
+		</div>
+		<script type="text/javascript">
+			Vue.component('my-button', {
+				template: '<div class="div1"><button @click="count++" class="button">+</button><input type="text" v-model="count" class="input" /><button @click="count--" class="button">-</button></div>',
+				data() {
+					return {
+						count: 1
+					}
+				},
+				watch:{
+					count(){
+						var reg= new RegExp(/^\D\d|\d\D|\D$/);
+						if (this.count < 1) {
+							alert('数量为1，不能再减')
+							this.count=1;
+						}
+						if(reg.test(this.count)){
+							alert('输入数据不合法');
+							this.count=1;
+						}
+					}
+				}
+				
+			})
+			new Vue({
+				el: '#demo1',
+			})
+		</script>
+	</body>
+</html>
